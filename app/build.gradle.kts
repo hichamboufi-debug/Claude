@@ -16,6 +16,17 @@ android {
         versionName = "1.0"
     }
 
+    // Clé de test fixe : toutes les versions compilées ont la même signature
+    // et peuvent s'installer par-dessus la précédente.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
