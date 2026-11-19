@@ -1,15 +1,22 @@
 package fr.educ.activites
 
-enum class Category(val label: String, val emoji: String) {
-    EMOTIONS("Émotions", "💬"),
-    CALME("Apaisement", "🌿"),
-    CREATIF("Créatif", "🎨"),
-    COOPERATION("Coopération", "🤝"),
-    SPORT("Mouvement", "⚽"),
-    CUISINE("Cuisine", "🍳"),
-    AUTONOMIE("Autonomie", "🔑"),
-    CONFIANCE("Estime de soi", "⭐"),
-    JEUX("Jeux", "🎲"),
+import androidx.annotation.DrawableRes
+
+enum class Category(
+    val label: String,
+    val emoji: String,
+    @DrawableRes val photo: Int,
+    val tagline: String,
+) {
+    EMOTIONS("Émotions", "💬", R.drawable.photo_emotions, "Mettre des mots sur ce qu'on ressent"),
+    CALME("Apaisement", "🌿", R.drawable.photo_calme, "Respirer, se poser, retrouver le calme"),
+    CREATIF("Créatif", "🎨", R.drawable.photo_creatif, "Créer, imaginer, s'exprimer"),
+    COOPERATION("Coopération", "🤝", R.drawable.photo_cooperation, "Réussir ensemble"),
+    SPORT("Mouvement", "⚽", R.drawable.photo_sport, "Bouger et se dépenser"),
+    CUISINE("Cuisine", "🍳", R.drawable.photo_cuisine, "Préparer et partager un repas"),
+    AUTONOMIE("Autonomie", "🔑", R.drawable.photo_autonomie, "Apprendre la vie quotidienne"),
+    CONFIANCE("Estime de soi", "⭐", R.drawable.photo_confiance, "Grandir et croire en soi"),
+    JEUX("Jeux", "🎲", R.drawable.photo_jeux, "Jouer, rire, se mesurer sans écraser"),
 }
 
 data class Activity(
@@ -453,5 +460,50 @@ val activities: List<Activity> = listOf(
             "Faites une playlist du groupe.",
         ),
         "Vérifiez les paroles et les clips des chansons proposées. La musique peut réveiller des souvenirs : restez attentif aux réactions.",
+    ),
+)
+
+data class ProLink(val title: String, val desc: String, val url: String) {
+    val domain: String
+        get() = url.removePrefix("https://").removePrefix("http://").removePrefix("www.").substringBefore("/")
+}
+
+data class ProGroup(val title: String, val emoji: String, val links: List<ProLink>)
+
+val proGroups: List<ProGroup> = listOf(
+    ProGroup(
+        "Aide et signalement", "🆘",
+        listOf(
+            ProLink("119 – Allô Enfance en danger", "Numéro national gratuit et confidentiel, 24 h/24, pour signaler ou demander conseil.", "https://allo119.gouv.fr/"),
+            ProLink("Défenseur des droits", "Droits de l'enfant, saisine en cas de non-respect des droits.", "https://www.defenseurdesdroits.fr/"),
+            ProLink("Ministère des Solidarités", "Politiques de protection de l'enfance et textes de référence.", "https://solidarites.gouv.fr/"),
+            ProLink("Service-Public.fr", "Fiches pratiques officielles sur la protection de l'enfance.", "https://www.service-public.fr/"),
+        ),
+    ),
+    ProGroup(
+        "Réseaux et associations", "🤝",
+        listOf(
+            ProLink("CNAPE", "Fédération nationale des associations de protection de l'enfant.", "https://www.cnape.fr/"),
+            ProLink("Apprentis d'Auteuil", "Fondation d'accueil, d'éducation et d'insertion des jeunes.", "https://www.apprentis-auteuil.org/"),
+            ProLink("Enfance et Partage", "Prévention et lutte contre les maltraitances faites aux enfants.", "https://www.enfance-et-partage.org/"),
+            ProLink("UNICEF France", "Droits de l'enfant, ressources et outils pédagogiques.", "https://www.unicef.fr/"),
+        ),
+    ),
+    ProGroup(
+        "Pédagogie et activités", "🎯",
+        listOf(
+            ProLink("CEMÉA", "Éducation nouvelle, formation et pratiques d'animation.", "https://www.cemea.asso.fr/"),
+            ProLink("Les Francas", "Mouvement d'éducation populaire : activités et projets éducatifs.", "https://www.francas.asso.fr/"),
+            ProLink("Les Petits Débrouillards", "Activités scientifiques et ludiques pour les enfants et jeunes.", "https://www.lespetitsdebrouillards.org/"),
+            ProLink("EEDF", "Éclaireuses et éclaireurs de France : plein air et vie collective.", "https://www.eedf.fr/"),
+            ProLink("UFOLEP", "Activités physiques et sportives pour tous, hors compétition.", "https://www.ufolep.org/"),
+        ),
+    ),
+    ProGroup(
+        "Références professionnelles", "📚",
+        listOf(
+            ProLink("Haute Autorité de santé", "Recommandations de bonnes pratiques sociales et médico-sociales.", "https://www.has-sante.fr/"),
+            ProLink("Jeunes.gouv.fr", "Politiques de jeunesse, éducation populaire et engagement.", "https://www.jeunes.gouv.fr/"),
+        ),
     ),
 )
